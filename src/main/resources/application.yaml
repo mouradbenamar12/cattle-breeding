@@ -1,0 +1,22 @@
+server:
+  port: 8080
+spring:
+  datasource:
+#    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5433/cattle_management}
+    url: jdbc:postgresql://postgres:5432/cattle_db
+    username: cattle_user
+    password: cattle_password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+#jwt:
+#  secret: ydcncnlsdcv@3040
+#  expiration: 86400000
