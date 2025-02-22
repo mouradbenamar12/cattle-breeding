@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8090
 spring:
   datasource:
 #    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5433/cattle_management}
