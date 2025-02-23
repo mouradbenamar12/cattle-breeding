@@ -2,44 +2,40 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = 'mouradbn49/cattle-breeding-app'
-        CONTAINER_NAME = 'cattle-breeding-container'
+        DOCKER_IMAGE = "mouradbn49/cattle-breeding-app"
     }
 
     stages {
-        stage('Clone Repository') {
+        stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/mouradbenamar12/cattle-breeding.git'
             }
         }
 
-        stage('Build Application') {
+        stage('Build') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                sh './mvnw clean package -DskipTests'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t $IMAGE_NAME .'
-            }
-        }
-
-        stage('Push to Docker Hub') {
-            steps {
-                withDockerRegistry([credentialsId: 'docker-hub-credentials', url: '']) {
-                    sh 'docker push $IMAGE_NAME'
+                script {
+                    docker.build("${DOCKER_IMAGE}:${BUILD_NUMBER}")
                 }
             }
         }
 
-        stage('Deploy Container') {
+        stage('Push Docker Image') {
+            when {
+                expression { env.BRANCH_NAME == 'main' }
+            }
             steps {
-                sh '''
-                docker stop $CONTAINER_NAME || true
-                docker rm $CONTAINER_NAME || true
-                docker run -d -p 8090:8090 --name $CONTAINER_NAME $IMAGE_NAME
-                '''
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                        docker.image("${DOCKER_IMAGE}:${BUILD_NUMBER}").push()
+                    }
+                }
             }
         }
     }
