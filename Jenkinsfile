@@ -12,9 +12,9 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Maven Build') {
             steps {
-                sh './mvnw clean package -DskipTests'
+                bat 'mvn clean package -DskipTests'
             }
         }
 
