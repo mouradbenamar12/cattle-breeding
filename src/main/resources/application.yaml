@@ -1,11 +1,10 @@
 server:
-  port: 8090
+  port: 8080
 spring:
   datasource:
-#    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5433/cattle_management}
-    url: jdbc:postgresql://postgres:5432/cattle_db
-    username: cattle_user
-    password: cattle_password
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5433/cattle_management}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:pass123}
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect

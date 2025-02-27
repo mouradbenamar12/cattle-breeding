@@ -5,8 +5,8 @@ services:
     restart: always
     environment:
       POSTGRES_DB: cattle_db
-      POSTGRES_USER: cattle_user
-      POSTGRES_PASSWORD: cattle_password
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres123
     ports:
       - "5432:5432"
     volumes:
@@ -20,8 +20,8 @@ services:
       - postgres
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/cattle_db
-      SPRING_DATASOURCE_USERNAME: cattle_user
-      SPRING_DATASOURCE_PASSWORD: cattle_password
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres123
     ports:
       - "8080:8080"
 
